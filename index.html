@@ -30,6 +30,35 @@
       </div>
     </div>
   </div>
+
+  <script>
+    const form = document.querySelector("#form-upload");
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const nama_gambar = document.querySelector("#nama_gambar").value;
+      const gambar = document.querySelector("#gambar").files;
+
+      const formData = new FormData();
+      formData.append("nama_gambar", nama_gambar);
+      formData.append("gambar", gambar[0]);
+
+      const req = new XMLHttpRequest();
+      req.responseType = 'json';
+      req.onreadystatechange= function() {
+        // 0 => unsent
+        // 1 => opened
+        // 2 => HEADERS_ received
+        // 3 => loading
+        // 4 => done
+        if(this.readyState === 4) {
+          console.log(this.response);
+        }
+      }
+      req.open("POST", "/upload");
+      req.send(formData);
+    });
+  </script>
   
 </body>
 </html>
